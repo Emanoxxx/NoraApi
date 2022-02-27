@@ -1,0 +1,25 @@
+{
+  "name": "noraapi",
+  "version": "1.0.0",
+  "description": "Nora-api",
+  "main": "NoraApi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node NoraApi.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emanoxxx/NoraApi.git"
+  },
+  "author": "Emanoxxx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emanoxxx/NoraApi/issues"
+  },
+  "homepage": "https://github.com/Emanoxxx/NoraApi#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1"
+  }
+}
