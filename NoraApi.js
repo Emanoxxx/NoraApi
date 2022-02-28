@@ -1,9 +1,20 @@
 
 
 var express = require("express"); //llamamos a Express
+const router = express.Router();
+
+const bodyParser = require('body-parser');
+const fileupload = require('express-fileupload');
+const FileController = require('./controllers/FileController');
+const fileController = new FileController();
 var app = express();
 const dao = require("./Models/dao.js");
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileupload());
+app.use('/api', router);
+
+app.use(express.static(__dirname));
 
 var port = process.env.PORT || 8080; // establecemos nuestro puerto
 
@@ -39,9 +50,11 @@ app.post("/saludar", async (req, res) => {
     let user = req.body.usr;
     res.json({"Resultado":"Succes","Message":"Hola "+user+"!!!"});
 })
-app.post("/AddSound", async (req, res) => {
+/*app.post("/AddSound", async (req, res) => {
+    console.log(req.files);
     res.json({"Resultado":"Succes","Message":"Hola !!!"});
-})
+})*/
+app.post("/AddSound", fileController.subirArchivo);
 app.post("/RemoveSound", async (req, res) => {
     res.json({"Resultado":"Succes","Message":"Hola !!!"});
 })
