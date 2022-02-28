@@ -3,7 +3,7 @@ class FileController
 {
   subirArchivo = async (req, res, next) =>
   {
-    const
+    const 
   }
 }
 async function makeFile(req){
