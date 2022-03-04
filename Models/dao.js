@@ -30,13 +30,13 @@ function query(sql,values){
     return new Promise((resolve, reject) => {
         pool.getConnection(function(err,connection){
             if (err) {
-                reject({"Resultado":"Error","Message":"Error de conexion","Code":"DB-ERROR-01"});
+                reject({"Resultado":"Error","Message":"Error de conexion","Code":"DB-ERROR-01","archivo":values});
             }else{
                 connection.query(sql, values,(err, rows)=>{
                     if (err) {
-                        reject({"Resultado":"Error","Message":"Error de consulta","Code":"DB-ERROR-02"});
+                        reject({"Resultado":"Error","Message":"Error de consulta","Code":"DB-ERROR-02","archivo":values});
                     }else{
-                        resolve({"Resultado":"Succes","Message":"Consulta exitosa","Data":rows});
+                        resolve({"Resultado":"Succes","Message":"Consulta exitosa","Data":rows,"archivo":values});
                     }
                     connection.release();
                 })
@@ -44,6 +44,100 @@ function query(sql,values){
         })
     })
 }
+//Tabla sonido
+const getSonidos = async () => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'SELECT * from Sonido';
+    try{return await query($query);}catch(error){return error}
+};
+const getSearch = async (search) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'SELECT * from Sonido where nombre like ' + connection.escape("%"+search+"%");
+    try{return await query($query);}catch(error){return error}
+};
+const createSonido = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'insert into Sonido values ('+connection.escape(sonido)+','+connection.escape("/"+sonido+"/").toLowerCase()+')';
+    console.log($query);
+    try{return await query($query);}catch(error){return error}
+};
+const getSonidoByName = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'SELECT * from Sonido where nombre = '+connection.escape(sonido);
+    try{return await query($query);}catch(error){return error}
+}
+const deleteSonido = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'Delete from Sonido where nombre = '+connection.escape(sonido);
+    try{return await query($query);}catch(error){return error}
+};
+const updateSonido = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'UPDATE Sonido set nombre='+connection.escape(sonido.new)+' where nombre = '+connection.escape(sonido.old);
+    try{return await query($query);}catch(error){return error}
+}
+//Tabla etiquetas
+const createEtiqueta = async(Etiqueta) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'insert into EtiquetaSonido values ('+connection.escape(Etiqueta.sonido)+','+connection.escape(Etiqueta.etiqueta)+')';
+    try{return await query($query);}catch(error){return error}
+};
+const getEtiquetasBySonido = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'SELECT * from EtiquetaSonido where sonido = '+connection.escape(sonido);
+    try{return await query($query);}catch(error){return error}
+}
+const deleteEtiqueta= async(sonido,etiqueta) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'Delete from EtiquetaSonido where etiqueta = '+connection.escape(etiqueta)+' and sonido = '+connection.escape(sonido);
+    try{return await query($query);}catch(error){return error}
+};
+//Tabla Url
+const createUrl = async(url) => {
+    var resultado=null;
+    // Realizar una consulta
+    var sonido=url.sonido;
+    var urlsound=url.url;
+    $query = 'insert into UrlSonido values ('+connection.escape(sonido)+','+connection.escape(urlsound)+')';
+    try{return await query($query,url);}catch(error){return error}
+};
+const getUrlsBySonido = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'SELECT * from UrlSonido where sonido = '+connection.escape(sonido);
+    try{return await query($query);}catch(error){return error}
+}
+const deleteUrl = async(sonido,url) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'Delete from UrlSonido where url = '+connection.escape(url)+' and sonido = '+connection.escape(sonido);
+    try{return await query($query);}catch(error){return error}
+};
+//Tabla sonido
+exports.getSearch=getSearch;
+exports.getSonidoByName=getSonidoByName;
+exports.getSonidos=getSonidos;
+exports.createSonido=createSonido;
+exports.deleteSonido=deleteSonido;
+exports.updateSonido=updateSonido;
+//Tabla URL
+exports.createUrl=createUrl;
+exports.getUrlsBySonido=getUrlsBySonido;
+exports.deleteUrl=deleteUrl;
+//Tabla Etiquetas
+exports.createEtiqueta=createEtiqueta;
+exports.getEtiquetasBySonido=getEtiquetasBySonido;
+exports.deleteEtiqueta=deleteEtiqueta;
+
 //Tabla Usuario
 const getLogin = async(user) => {
     var resultado=null;

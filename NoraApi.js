@@ -46,19 +46,46 @@ app.post("/login", async (req, res) => {
     
 })
 
+//Consultas a base de datos
+//Selects
+app.post("/getSonidos",async (req, res)=>{
+    await res.send(await dao.getSonidos());
+});
+app.post("/getSearch",async (req, res)=>{
+    await res.send(await dao.getSearch(req.body.search));
+});
+app.post("/getSonidoByName",async (req, res)=>{
+    await res.send(await dao.getSonidoByName(req.body.name));
+});
+app.post("/getEtiquetasBySonido",async (req, res)=>{
+    await res.send(await dao.getEtiquetasBySonido(req.body.name));
+});
+app.post("/getUrlsBySonido",async (req, res)=>{
+    await res.send(await dao.getUrlsBySonido(req.body.name));
+});
+//Inserts
+app.post("/insertSonido",async (req, res)=>{
+    await res.send(await dao.createSonido(req.body.name));
+});
+app.post("/inserEtiqueta",async (req, res)=>{
+    await res.send(await dao.createEtiqueta(req.body.Etiqueta));
+});
+//Delets
+app.post("/deleteSonido",async (req, res)=>{
+    await res.send(await dao.deleteSonido(req.body.name));
+});
+app.post("/deleteEtiqueta",async (req, res)=>{
+    await res.send(await dao.deleteEtiqueta(req.body.name,req.body.etiqueta));
+});
+
+
 app.post("/saludar", async (req, res) => {
     let user = req.body.usr;
     res.json({"Resultado":"Succes","Message":"Hola "+user+"!!!"});
-})
-/*app.post("/AddSound", async (req, res) => {
-    console.log(req.files);
-    res.json({"Resultado":"Succes","Message":"Hola !!!"});
-})*/
+});
 app.post("/AddSound", fileController.subirArchivo);
-app.post("/RemoveSound", async (req, res) => {
-    res.json({"Resultado":"Succes","Message":"Hola !!!"});
-})
-
+app.post("/RemoveSound", fileController.borrarArchivo);
+app.post("/RemoveFolderSonido", fileController.borrarFolder);
 // iniciamos nuestro servidor
 app.listen(port);
 console.log("API escuchando en el puerto " + port);
