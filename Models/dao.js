@@ -122,6 +122,13 @@ const deleteUrl = async(sonido,url) => {
     $query = 'Delete from UrlSonido where url = '+connection.escape(url)+' and sonido = '+connection.escape(sonido);
     try{return await query($query);}catch(error){return error}
 };
+//Obtener ruta Archivo
+const obtenerArchivo = async(sonido) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'select path,url from Sonido,UrlSonido where nombre = '+connection.escape(sonido)+' ORDER BY RAND() LIMIT 1;';
+    try{return await query($query);}catch(error){return error}
+};
 //Tabla sonido
 exports.getSearch=getSearch;
 exports.getSonidoByName=getSonidoByName;
@@ -154,6 +161,8 @@ const getLogin = async(user) => {
 };
 //Tabla Usuario
 exports.getLogin=getLogin;
+//Obtener ruta Archivo
+exports.obtenerArchivo=obtenerArchivo;
 
 
 

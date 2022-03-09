@@ -77,8 +77,10 @@ app.post("/deleteSonido",async (req, res)=>{
 app.post("/deleteEtiqueta",async (req, res)=>{
     await res.send(await dao.deleteEtiqueta(req.body.name,req.body.etiqueta));
 });
-
-
+//obtenerArchivo
+app.post("/obtenerArchivo",async (req, res)=>{
+    await res.send(await dao.obtenerArchivo(req.body.name));
+});
 app.post("/saludar", async (req, res) => {
     let user = req.body.usr;
     res.json({"Resultado":"Succes","Message":"Hola "+user+"!!!"});
