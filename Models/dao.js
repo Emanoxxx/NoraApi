@@ -126,7 +126,7 @@ const deleteUrl = async(sonido,url) => {
 const obtenerArchivo = async(sonido) => {
     var resultado=null;
     // Realizar una consulta
-    $query = 'select path,url from Sonido,UrlSonido where nombre = '+connection.escape(sonido)+' ORDER BY RAND() LIMIT 1;';
+    $query = 'select path,url from Sonido,UrlSonido where nombre = '+connection.escape(sonido)+' and sonido='+connection.escape(sonido)+' ORDER BY RAND() LIMIT 1;';
     try{return await query($query);}catch(error){return error}
 };
 //Tabla sonido
