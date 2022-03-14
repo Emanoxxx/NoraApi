@@ -88,6 +88,7 @@ app.post("/saludar", async (req, res) => {
 app.post("/AddSound", fileController.subirArchivo);
 app.post("/RemoveSound", fileController.borrarArchivo);
 app.post("/RemoveFolderSonido", fileController.borrarFolder);
+app.get("/",(req, res) => res.send("ok"));
 // iniciamos nuestro servidor
 app.listen(port);
 console.log("API escuchando en el puerto " + port);
