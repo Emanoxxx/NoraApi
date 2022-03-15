@@ -34,7 +34,7 @@ function query(sql,values){
             }else{
                 connection.query(sql, values,(err, rows)=>{
                     if (err) {
-                        reject({"Resultado":"Error","Message":"Error de consulta","Code":"DB-ERROR-02","archivo":values});
+                        reject({"Resultado":"Error","Message":err,"Code":"DB-ERROR-02","archivo":values});
                     }else{
                         resolve({"Resultado":"Succes","Message":"Consulta exitosa","Data":rows,"archivo":values});
                     }
