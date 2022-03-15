@@ -30,7 +30,7 @@ function query(sql,values){
     return new Promise((resolve, reject) => {
         pool.getConnection(function(err,connection){
             if (err) {
-                reject({"Resultado":"Error","Message":"Error de conexion","Code":"DB-ERROR-01","archivo":values});
+                reject({"Resultado":"Error","Message":err,"Code":"DB-ERROR-01","archivo":values});
             }else{
                 connection.query(sql, values,(err, rows)=>{
                     if (err) {
