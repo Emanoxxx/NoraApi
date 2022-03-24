@@ -36,7 +36,7 @@ function query(sql,values){
                     if (err) {
                         reject({"Resultado":"Error","Message":err,"Code":"DB-ERROR-02","archivo":values});
                     }else{
-                        resolve({"Resultado":"Succes","Message":"Consulta exitosa","Data":rows,"archivo":values});
+                        resolve({"Resultado":"Success","Message":"Consulta exitosa","Data":rows,"archivo":values});
                     }
                     connection.release();
                 })
@@ -149,10 +149,9 @@ exports.deleteEtiqueta=deleteEtiqueta;
 const getLogin = async(user) => {
     var resultado=null;
     // Realizar una consulta
-    $query = 'select * from Usuario where nombre = BINARY '+connection.escape(user.usr)+' and pass = BINARY '+connection.escape(user.psw);
+    $query = 'select * from Usuario where usuario = BINARY '+connection.escape(user.usr)+' and pass = BINARY '+connection.escape(user.psw);
     resultado=await query($query);
-    console.log(resultado.Data);
-    if(resultado.Data.length > 0){
+    if(await resultado.Data.length > 0){
         return true;
     }else{
         return false;
