@@ -51,6 +51,7 @@ app.post("/login", async (req, res) => {
     ) {
         let result = await dao.getUserByUsername(username);
         let user = {
+            Resultado: "Succes",
             id: result.id,
             username: result.username,
             nombre: result.nombre,
