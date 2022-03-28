@@ -56,6 +56,7 @@ app.post("/login", async (req, res) => {
             Message: "Hola " + username + "!!!",
             Data: req.body,
             Token: service.createToken(username),
+            Nombre:username
         });
     } else {
         res.json({
