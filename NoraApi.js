@@ -48,18 +48,50 @@ app.post("/login", async (req, res) => {
             psw: password,
         })
     ) {
-        res.json({
-            Resultado: "Succes",
-            Message: "Hola " + username + "!!!",
-            Data: req.body,
-            Token: service.createToken(username),
-        });
+        let result = await dao.getUserByUsername(username);
+        let user = {
+            id: result.id,
+            username: result.username,
+            nombre: result.nombre,
+            email: result.email,
+            isActive: result.isActive,
+            token: service.createToken(username),
+        };
+        res.json(user);
     } else {
         res.json({
             Resultado: "Error",
             Message: "Usuario " + username + " o Credenciales Incorrectas.",
             Data: req.body,
         });
+    }
+});
+
+app.post("/register", async (req, res) => {
+    if (
+        !req.body ||
+        !req.body.username ||
+        !req.body.email ||
+        !req.body.nombre || 
+        !req.body.password
+    ) {
+        res.json({
+            mensaje: "Parametros incompletos.",
+            error: "MISSING_PARAM",
+        });
+        return;
+    }
+
+    let username = req.body.username;
+    let email = req.body.email;
+    let nombre = req.body.nombre;
+    let password = req.body.password;
+
+    let response = await dao.createUser(username, email, nombre, password)
+    if(response) {
+        res.send(response);
+    } else {
+        res.status(500).send({message: "unable to create user"});
     }
 });
 
