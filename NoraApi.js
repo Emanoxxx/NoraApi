@@ -31,6 +31,9 @@ app.use(function (req, res, next) {
 app.get("/prueba", middleware.ensureAuthenticated, (req, res) => {
     res.send("Lo lograste");
 });
+app.post("/registro",  async (req, res) => {
+    await res.send(await dao.createUsuario(req.body.usuario));
+});
 
 app.post("/login", async (req, res) => {
     if (!req.body || !req.body.usr || !req.body.psw) {
@@ -97,46 +100,46 @@ app.post("/register", async (req, res) => {
 
 //Consultas a base de datos
 //Selects
-app.post("/getSonidos", async (req, res) => {
+app.post("/getSonidos", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.getSonidos());
 });
-app.post("/getSearch", async (req, res) => {
+app.post("/getSearch", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.getSearch(req.body.search));
 });
-app.post("/getSonidoByName", async (req, res) => {
+app.post("/getSonidoByName", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.getSonidoByName(req.body.name));
 });
-app.post("/getEtiquetasBySonido", async (req, res) => {
+app.post("/getEtiquetasBySonido", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.getEtiquetasBySonido(req.body.name));
 });
-app.post("/getUrlsBySonido", async (req, res) => {
+app.post("/getUrlsBySonido", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.getUrlsBySonido(req.body.name));
 });
 //Inserts
-app.post("/insertSonido", async (req, res) => {
+app.post("/insertSonido", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.createSonido(req.body.name));
 });
-app.post("/inserEtiqueta", async (req, res) => {
+app.post("/inserEtiqueta", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.createEtiqueta(req.body.Etiqueta));
 });
 //Delets
-app.post("/deleteSonido", async (req, res) => {
+app.post("/deleteSonido", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.deleteSonido(req.body.name));
 });
-app.post("/deleteEtiqueta", async (req, res) => {
+app.post("/deleteEtiqueta", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.deleteEtiqueta(req.body.name, req.body.etiqueta));
 });
 //obtenerArchivo
-app.post("/obtenerArchivo", async (req, res) => {
+app.post("/obtenerArchivo", middleware.ensureAuthenticated,  async (req, res) => {
     await res.send(await dao.obtenerArchivo(req.body.name));
 });
-app.post("/saludar", async (req, res) => {
+app.post("/saludar", middleware.ensureAuthenticated,  async (req, res) => {
     let user = req.body.usr;
     res.json({ Resultado: "Succes", Message: "Hola " + user + "!!!" });
 });
-app.post("/AddSound", fileController.subirArchivo);
-app.post("/RemoveSound", fileController.borrarArchivo);
-app.post("/RemoveFolderSonido", fileController.borrarFolder);
+app.post("/AddSound", middleware.ensureAuthenticated, fileController.subirArchivo);
+app.post("/RemoveSound", middleware.ensureAuthenticated, fileController.borrarArchivo);
+app.post("/RemoveFolderSonido", middleware.ensureAuthenticated, fileController.borrarFolder);
 app.get("/", (req, res) => res.send("ok"));
 // iniciamos nuestro servidor
 app.listen(port);

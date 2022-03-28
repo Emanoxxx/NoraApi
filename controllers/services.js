@@ -1,6 +1,6 @@
 var jwt = require("jwt-simple");
 var moment = require("moment");
-var config = require('../config.json');
+var config = require('../../NoraDB.json');
 
 exports.createToken = function (user) {
   var payload = {

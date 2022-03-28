@@ -231,6 +231,13 @@ const obtenerArchivo = async (sonido) => {
         return error;
     }
 };
+//Registrar usuario
+const createUsuario = async(usuario) => {
+    var resultado=null;
+    // Realizar una consulta
+    $query = 'insert into Usuario(nombre,usuario,pass,isActive,email) values('+connection.escape(usuario.nombre)+','+connection.escape(usuario.usuario)+','+connection.escape(usuario.pass)+',false,'+connection.escape(usuario.correo)+')'
+    try{return await query($query);}catch(error){return error}
+};
 //Tabla sonido
 exports.getSearch = getSearch;
 exports.getSonidoByName = getSonidoByName;
@@ -264,6 +271,11 @@ const getLogin = async (user) => {
     }
     //return resultado;
 };
+//Tabla Usuario
+exports.createUsuario=createUsuario;
+exports.getLogin=getLogin;
+//Obtener ruta Archivo
+exports.obtenerArchivo=obtenerArchivo;
 
 const getUserByUsername = async (username) => {
     $query =
