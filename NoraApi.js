@@ -31,9 +31,7 @@ app.use(function (req, res, next) {
 app.get("/prueba", middleware.ensureAuthenticated, (req, res) => {
     res.send("Lo lograste");
 });
-app.post("/registro",  async (req, res) => {
-    await res.send(await dao.createUsuario(req.body.usuario));
-});
+
 
 app.post("/login", async (req, res) => {
     if (!req.body || !req.body.usr || !req.body.psw) {
@@ -58,6 +56,7 @@ app.post("/login", async (req, res) => {
             nombre: result.nombre,
             email: result.email,
             isActive: result.isActive,
+            isAdmin: result.isAdmin,
             token: service.createToken(username),
         };
         res.json(user);

@@ -231,13 +231,6 @@ const obtenerArchivo = async (sonido) => {
         return error;
     }
 };
-//Registrar usuario
-const createUsuario = async(usuario) => {
-    var resultado=null;
-    // Realizar una consulta
-    $query = 'insert into Usuario(nombre,usuario,pass,isActive,email) values('+connection.escape(usuario.nombre)+','+connection.escape(usuario.usuario)+','+connection.escape(usuario.pass)+',false,'+connection.escape(usuario.correo)+')'
-    try{return await query($query);}catch(error){return error}
-};
 //Tabla sonido
 exports.getSearch = getSearch;
 exports.getSonidoByName = getSonidoByName;
@@ -259,7 +252,7 @@ const getLogin = async (user) => {
     var resultado = null;
     // Realizar una consulta
     $query =
-        "select * from Usuario where usuario = BINARY " +
+        "select * from Usuario where username = BINARY " +
         connection.escape(user.usr) +
         " and pass = BINARY " +
         connection.escape(user.psw);
@@ -272,14 +265,13 @@ const getLogin = async (user) => {
     //return resultado;
 };
 //Tabla Usuario
-exports.createUsuario=createUsuario;
 exports.getLogin=getLogin;
 //Obtener ruta Archivo
 exports.obtenerArchivo=obtenerArchivo;
 
 const getUserByUsername = async (username) => {
     $query =
-        "select * from Usuario where usuario = BINARY " +
+        "select * from Usuario where username = BINARY " +
         connection.escape(username);
     let resultado = await query($query);
     if(resultado) {
@@ -288,8 +280,9 @@ const getUserByUsername = async (username) => {
             id : user.id,
             email: user.email,
             nombre: user.nombre,
-            username: user.usuario,
-            isActive: user.isActive
+            username: user.username,
+            isActive: user.isActive,
+            isAdmin: user.isAdmin
         }
         return response;
     } else {
@@ -299,7 +292,7 @@ const getUserByUsername = async (username) => {
 
 const createUser = async (username, email, nombre, password) => {
     let $query =
-        "INSERT into Usuario (usuario, email, nombre, pass, isActive) values (" +
+        "INSERT into Usuario (username, email, nombre, pass) values (" +
         connection.escape(username) +
         "," +
         connection.escape(email) +
@@ -307,8 +300,6 @@ const createUser = async (username, email, nombre, password) => {
         connection.escape(nombre) +
         "," +
         connection.escape(password) +
-        "," +
-        connection.escape(false) + 
         ");"
 
     try {
