@@ -51,13 +51,13 @@ app.post("/login", async (req, res) => {
     ) {
         let result = await dao.getUserByUsername(username);
         let user = {
-            Resultado: "Succes",
-            id: result.id,
-            username: result.username,
-            nombre: result.nombre,
-            email: result.email,
-            isActive: result.isActive,
-            isAdmin: result.isAdmin,
+            Resultado: "Success",
+            id: result.Data[0].id,
+            username: result.Data[0].username,
+            nombre: result.Data[0].nombre,
+            email: result.Data[0].email,
+            isActive: result.Data[0].isActive,
+            isAdmin: result.Data[0].isAdmin,
             token: service.createToken(username),
         };
         res.json(user);
