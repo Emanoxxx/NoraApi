@@ -271,8 +271,10 @@ exports.obtenerArchivo=obtenerArchivo;
 
 const getUserByUsername = async (username) => {
     $query =
-        "select * from Usuario where username = BINARY " +
+        "select id,email,nombre,isActive,isAdmin from Usuario where username = BINARY " +
         connection.escape(username);
+    
+    /*
     let resultado = await query($query);
     if(resultado) {
         let user = resultado.Data[0];
@@ -283,10 +285,16 @@ const getUserByUsername = async (username) => {
             username: user.username,
             isActive: user.isActive,
             isAdmin: user.isAdmin
+            
         }
-        return response;
+        return resultado;
     } else {
         return null
+    }*/
+    try {
+        return await query($query);
+    } catch (error) {
+        return error;
     }
 };
 
