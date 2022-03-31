@@ -130,7 +130,7 @@ app.post("/deleteEtiqueta", middleware.ensureAuthenticated,  async (req, res) =>
     await res.send(await dao.deleteEtiqueta(req.body.name, req.body.etiqueta));
 });
 //obtenerArchivo
-app.post("/obtenerArchivo", middleware.ensureAuthenticated,  async (req, res) => {
+app.post("/obtenerArchivo",  async (req, res) => {
     await res.send(await dao.obtenerArchivo(req.body.name));
 });
 app.post("/saludar", middleware.ensureAuthenticated,  async (req, res) => {
