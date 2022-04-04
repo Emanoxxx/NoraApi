@@ -252,7 +252,7 @@ const getLogin = async (user) => {
     var resultado = null;
     // Realizar una consulta
     $query =
-        "select * from Usuario where username = BINARY " +
+        "select * from Usuario where username =" +
         connection.escape(user.usr) +
         " and pass = BINARY " +
         connection.escape(user.psw);
