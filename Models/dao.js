@@ -271,7 +271,7 @@ exports.obtenerArchivo=obtenerArchivo;
 
 const getUserByUsername = async (username) => {
     $query =
-        "select id,email,nombre,isActive,isAdmin,username from Usuario where username = BINARY " +
+        "select id,email,nombre,isActive,isAdmin,username from Usuario where username =" +
         connection.escape(username);
     
     /*
